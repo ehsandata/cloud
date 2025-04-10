@@ -1,18 +1,27 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function App() {
-  const [message, setMessage] = useState('');
+  const [dbName, setDbName] = useState('');
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/`)
-      .then(res => res.text())
-      .then(data => setMessage(data));
+    fetch(`${process.env.REACT_APP_API_URL}/api/db-info`)
+      .then(res => res.json())
+      .then(data => {
+        setDbName(data.dbName);
+      })
+      .catch(err => {
+        console.error('Failed to fetch DB name:', err);
+      });
   }, []);
 
   return (
-    <div>
-      <h1>React + DigitalOcean MongoDB</h1>
-      <p>{message}</p>
+    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
+      <h1>Welcome to the App 🎉</h1>
+      {dbName && (
+        <p style={{ color: 'green' }}>
+          ✅ Connected to database: <strong>{dbName}</strong>
+        </p>
+      )}
     </div>
   );
 }
