@@ -1,23 +1,18 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 
 function App() {
-  const [status, setStatus] = useState('checking...');
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:3000/check-db')
-      .then(res => {
-        setStatus(`✅ MongoDB is ${res.data.status}`);
-      })
-      .catch(() => {
-        setStatus('❌ Failed to connect to MongoDB');
-      });
+    fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/`)
+      .then(res => res.text())
+      .then(data => setMessage(data));
   }, []);
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-      <h1>MongoDB Connection Status</h1>
-      <p>{status}</p>
+    <div>
+      <h1>React + DigitalOcean MongoDB</h1>
+      <p>{message}</p>
     </div>
   );
 }
