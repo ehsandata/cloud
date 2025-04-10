@@ -4,23 +4,24 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
+const PORT = process.env.PORT || 5000;
+
 app.use(cors());
 app.use(express.json());
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('✅ Connected to MongoDB.'))
-  .catch((err) => console.error('❌ Failed to connect to MongoDB:', err));
+// MongoDB connection
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  ssl: true
+})
+.then(() => console.log('Connected to DigitalOcean MongoDB'))
+.catch(err => console.error('MongoDB connection error:', err));
 
-// Simple route to check connection
-app.get('/check-db', (req, res) => {
-  if (mongoose.connection.readyState === 1) {
-    res.json({ status: 'connected' });
-  } else {
-    res.status(500).json({ status: 'not connected' });
-  }
+app.get('/', (req, res) => {
+  res.send('API is running');
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${process.env.PORT}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
