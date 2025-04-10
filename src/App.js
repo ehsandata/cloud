@@ -5,7 +5,7 @@ function App() {
   const [status, setStatus] = useState('checking...');
 
   useEffect(() => {
-    axios.get('https://app.mojtabaonline.me/check-db')
+    axios.get('http://localhost/check-db')
       .then(res => {
         setStatus(`✅ MongoDB is ${res.data.status}`);
       })
