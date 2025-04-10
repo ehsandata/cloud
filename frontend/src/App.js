@@ -6,11 +6,10 @@ function App() {
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/db-info`)
       .then(res => res.json())
-      .then(data => {
-        setDbName(data.dbName);
-      })
+      .then(data => setDbName(data.dbName))
       .catch(err => {
-        console.error('Failed to fetch DB name:', err);
+        console.error('Error fetching db name:', err);
+        setDbName('Error fetching database info');
       });
   }, []);
 
