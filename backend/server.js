@@ -2,14 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-import { BrowserRouter } from 'react-router-dom';
-
-ReactDOM.render(
-  <BrowserRouter basename="/cloud-frontend">
-    <App />
-  </BrowserRouter>,
-  document.getElementById('root')
-);
 
 
 const app = express();
