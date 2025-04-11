@@ -4,7 +4,7 @@ function App() {
   const [dbName, setDbName] = useState('');
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/db-info`)
+    fetch(`${process.env.REACT_APP_API_URL}/db-info`)
       .then(res => res.json())
       .then(data => setDbName(data.dbName))
       .catch(err => {
